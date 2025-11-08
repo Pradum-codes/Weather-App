@@ -1,0 +1,14 @@
+name: Deploy to Fly.io
+on:
+  push:
+    branches: ["main"]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: superfly/flyctl-actions/setup-flyctl@master
+      - run: flyctl launch --remote-only --name weather-app --generate-name=false --region sin
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
